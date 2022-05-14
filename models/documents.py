@@ -15,7 +15,7 @@ class QuizDoc(TypedDict):
   quizType: str
   questions: str
   guid: str
-  ts: str
+  ts: int
 
 class ResponseDoc(TypedDict):
   spotifyId: str

@@ -1,6 +1,6 @@
 import os
 import jwt
-from models.http import JWT
+from models.jwt import JWT
 
 class AuthClient:
   def __init__(self):

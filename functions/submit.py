@@ -40,16 +40,16 @@ def handler(event: events.APIGatewayProxyEventV1, context: context_.Context)-> r
       return HttpFailure(400, m)
 
     request: SubmitRequest = json.loads(event['body'])
-    quiz_doc: QuizDoc = ddb.get_quiz(request['quizType'], decoded['data']['spotifyId'])
+    quiz_doc: QuizDoc = ddb.get_quiz(request['quizType'], request['quizId'])
     if quiz_doc is None:
-      m = f"Invalid request, no quiz found quizType={request['quizType']} spotifyId={decoded['data']['spotifyId']}"
+      m = f"Invalid request, no quiz found quizType={request['quizType']} quizId={request['quizId']}"
       return HttpFailure(400, m)
 
     quiz_vo: QuizVO = {}
     quiz_vo['guid'] = quiz_doc['guid']
     quiz_vo['quizType'] = quiz_doc['quizType']
     quiz_vo['quizId'] = quiz_doc['quizId']
-    quiz_vo['ts'] = quiz_doc['ts']
+    quiz_vo['ts'] = int(quiz_doc['ts'])
     quiz_vo['questions'] = json.loads(quiz_doc['questions'])
     
     answer_key = {}
@@ -63,7 +63,7 @@ def handler(event: events.APIGatewayProxyEventV1, context: context_.Context)-> r
 
     response_doc: ResponseDoc = {}
     response_doc['spotifyId'] = decoded['data']['spotifyId']
-    response_doc['quizId'] = request['quizId']
+    response_doc['quizId'] = quiz_doc['guid']
     response_doc['quizType'] = request['quizType']
     response_doc['answers'] = json.dumps(request['answers'])
     response_doc['score'] = score

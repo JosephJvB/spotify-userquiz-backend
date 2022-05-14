@@ -10,6 +10,9 @@ class DdbClient():
   ts: TypeSerializer
   def __init__(self):
     self.client = boto3.client('dynamodb')
+    # type deserializer is turning ddb Number attributes into Decimal, then json.dumps fails to serialize decimal class where int should be
+    # be sure to turn all attrs to int() after returning from ddb
+    # https://github.com/boto/boto3/issues/369
     self.td = TypeDeserializer()
     self.ts = TypeSerializer()
   

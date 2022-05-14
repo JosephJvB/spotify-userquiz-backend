@@ -57,13 +57,14 @@ def handler(event: events.APIGatewayProxyEventV1, context: context_.Context)-> r
       quiz_vo['guid'] = quiz_doc['guid']
       quiz_vo['quizType'] = quiz_doc['quizType']
       quiz_vo['quizId'] = quiz_doc['quizId']
-      quiz_vo['ts'] = quiz_doc['ts']
+      quiz_vo['ts'] = int(quiz_doc['ts'])
       quiz_vo['questions'] = json.loads(quiz_doc['questions'])
 
       response_doc: ResponseDoc = ddb.get_quiz_response(decoded['data']['spotifyId'], quiz_vo['guid'])
       if response_doc is not None:
+        response_vo: QuizResponseVO = {}
         response_vo['quizId'] = quiz_vo['guid']
-        response_vo['score'] = response_doc['score']
+        response_vo['score'] = int(response_doc['score'])
         response_vo['answers'] = json.loads(response_doc['answers'])
 
     token = auth.sign_jwt({
