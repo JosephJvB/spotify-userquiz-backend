@@ -11,5 +11,4 @@ class QuizVO(TypedDict):
   guid: str
   quizId: str
   quizType: str
-  type: str
   questions: list[Question]

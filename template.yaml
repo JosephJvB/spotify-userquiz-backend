@@ -19,6 +19,11 @@ Parameters:
     Default: '{{resolve:ssm:JafSpotifySecret:1}}'
     AllowedValues:
       - '{{resolve:ssm:JafSpotifySecret:1}}'
+  JwtSecret:
+    Type: String
+    Default: '{{resolve:ssm:JafJwtSecret:1}}'
+    AllowedValues:
+      - '{{resolve:ssm:JafJwtSecret:1}}'
 
 Globals:
   Function:
@@ -30,6 +35,7 @@ Globals:
         DEBUG: !Ref DEBUG
         SpotifyClientId: !Ref SpotifyClientId
         SpotifyClientSecret: !Ref SpotifyClientSecret
+        JwtSecret: !Ref JwtSecret
 
 Resources:
   HttpApiGateway:
@@ -44,9 +50,9 @@ Resources:
       Handler: functions/load_quiz.handler
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: SpotifyProfile
-        - DynamoDBCrudPolicy:
             TableName: SpotifyQuiz
+        - DynamoDBCrudPolicy:
+            TableName: SpotifyQuizResponse
       Events:
         GetLoadQuiz:
           Type: Api
