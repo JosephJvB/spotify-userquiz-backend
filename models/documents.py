@@ -17,6 +17,12 @@ class QuizDoc(TypedDict):
   guid: str
   ts: str
 
+class ResponseDoc(TypedDict):
+  spotifyId: str
+  quizId: str
+  answers: str
+  score: int
+
 class LoadedProfile(ProfileDoc):
   spotifyId: str
   tokenJson: SpotifyToken

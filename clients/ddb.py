@@ -42,6 +42,15 @@ class DdbClient():
       items.extend(r['Items'])
     return [self.to_object(i) for i in items]
 
+  def get_quiz_response(self, spotifyId: str, quizId: str) -> list[QuizDoc]:
+    r = self.client.get_item(
+      TableName='SpotifyQuizResponse',
+      Key={
+        'spotifyId': { 'S': spotifyId },
+        'quizId': { 'S': quizId },
+      }
+    )
+    return self.to_object(r.get('Item'))
 
   def to_document(self, obj: dict):
     return {

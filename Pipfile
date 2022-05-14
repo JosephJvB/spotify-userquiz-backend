@@ -7,7 +7,7 @@ name = "pypi"
 aws-lambda-typing = "*"
 requests = "*"
 boto3-type-annotations = "*"
-jwt = "*"
+pyjwt = "*"
 
 [dev-packages]
 boto3 = "*"
