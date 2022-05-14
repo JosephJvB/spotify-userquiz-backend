@@ -1,5 +1,6 @@
 from typing import TypedDict
 from aws_lambda_typing import responses
+from models.quiz import Question
 
 cors_headers = {
   'Content-Type': 'application/json',
@@ -25,8 +26,8 @@ class HttpFailure(HttpResponse):
   def __init__(self, code: int = 500, body: str = ''):
       super().__init__(code, body)
 
-class JWTData(TypedDict):
-  expires: int
-  spotifyId: str
-class JWT(TypedDict):
-  data: JWTData
+
+class SubmitRequest(TypedDict):
+  quizType: str
+  quizId: str
+  answers: list[Question]

@@ -7,6 +7,7 @@ from clients.auth import AuthClient
 from clients.helpers import now_ts
 from models.documents import ResponseDoc, QuizDoc
 from models.http import HttpFailure, HttpSuccess
+from models.jwt import JWT
 from models.view_objects import QuizResponseVO, QuizVO
 
 logger = logging.getLogger()
@@ -35,7 +36,7 @@ def handler(event: events.APIGatewayProxyEventV1, context: context_.Context)-> r
       logger.warn(m)
       return HttpFailure(400, m)
 
-    decoded = auth.decode_jwt(token)
+    decoded: JWT = auth.decode_jwt(token)
     if not decoded or not decoded.get('data'):
       m = 'Invalid request, JWT invalid'
       return HttpFailure(400, m)

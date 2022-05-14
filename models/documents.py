@@ -20,6 +20,7 @@ class QuizDoc(TypedDict):
 class ResponseDoc(TypedDict):
   spotifyId: str
   quizId: str
+  quizType: str
   answers: str
   score: int
 

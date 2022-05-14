@@ -2,7 +2,7 @@ import boto3
 from boto3.dynamodb.types import TypeDeserializer, TypeSerializer
 from boto3_type_annotations.dynamodb import Client
 
-from models.documents import ProfileDoc, QuizDoc
+from models.documents import QuizDoc, ResponseDoc
 
 class DdbClient():
   client: Client
@@ -51,6 +51,12 @@ class DdbClient():
       }
     )
     return self.to_object(r.get('Item'))
+
+  def put_quiz_response(self, response: ResponseDoc) -> list[QuizDoc]:
+    r = self.client.put_item(
+      TableName='SpotifyQuizResponse',
+      Item=self.to_document(response)
+    )
 
   def to_document(self, obj: dict):
     return {
