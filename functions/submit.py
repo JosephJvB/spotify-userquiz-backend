@@ -80,7 +80,8 @@ def handler(event: events.APIGatewayProxyEventV1, context: context_.Context)-> r
     })
 
     return HttpSuccess(json.dumps({
-      'message': f'Get quiz success',
+      'message': f'Submit quiz success',
+      'token': token,
       'quiz': quiz_vo,
       'quizResponse': response_vo,
     }))
